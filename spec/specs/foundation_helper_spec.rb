@@ -5,13 +5,15 @@ describe Foundation do
   it "can build a grid" do
 
     Foundation::Grid.new do
-      row do
-        col(10) do
+      row do |r|
+        r << "<div>Inserted Row</div>"
+        col(10) do |c|
           row do
             col(1) { "foo" }
             col(2) { "bar" }
             col(3) { "baz" }
           end
+          c << "Inserted Column"
         end
       end
 
@@ -33,6 +35,7 @@ describe Foundation do
 
     end.to_s.should == <<-HTML
 <div class='row'>
+  <div>Inserted Row</div>
   <div class='ten columns'>
     <div class='row'>
       <div class='one columns'>
@@ -45,6 +48,7 @@ describe Foundation do
         baz
       </div>
     </div>
+    Inserted Column
   </div>
 </div>
 <div class='row'>

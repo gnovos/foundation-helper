@@ -5,23 +5,39 @@ module Foundation
   class Row
 
     def initialize(max=12, &block)
-      @max, @cols = max, []
-      instance_exec(self, &block) if block
+      @max, @content = max, []
+      if block
+        content = instance_exec(self, &block)
+        @content << content if content != self
+      end
     end
 
     def col(*args, &block)
-      @cols << Column.new(*args, &block)
+      @content << Column.new(*args, &block)
+      self
+    end
+
+    def <<(content)
+      @content << content
+      self
     end
 
     def render(depth=0)
-      unsized = @cols.select { |c| c.width.nil? }.count
-      remaining = @max - @cols.map(&:width).msum
+      columns = @content.select { |c| c.is_a? Foundation::Column }
+      unsized = columns.select { |c| c.width.nil? }.count
+      remaining = @max - columns.map(&:width).msum
       width = [(remaining / unsized), 1].max unless unsized.z0?
 
       out = "  " * depth
       out += "<div class='row'>\n"
-      @cols.each do |column|
-        out += column.render(depth + 1, width)
+      @content.each do |content|
+        if content.is_a? Foundation::Column
+          out += content.render(depth + 1, width)
+        else
+          out += ("  " * (depth + 1))
+          out += content.to_s
+          out += "\n"
+        end
       end
       out += ("  " * depth)
       out += "</div>\n"
@@ -39,13 +55,18 @@ module Foundation
       @content, @classes, @width = [], args.select { |arg| !arg.is_a? Fixnum }, args.find{ |arg| arg.is_a? Fixnum }
       if block
         content = instance_exec(self, &block)
-        @content << content if content
+        @content << content if content != self
       end
     end
 
     def row(max=12, &block)
       @content << Row.new(max, &block)
-      nil
+      self
+    end
+
+    def <<(content)
+      @content << content
+      self
     end
 
     def render(depth=0, w=nil)
