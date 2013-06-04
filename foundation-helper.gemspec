@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name         = 'foundation-helper'
-  s.version      = '0.0.2'
+  s.version      = '0.0.3'
   s.homepage     = 'https://github.com/gnovos/foundation-helper'
   s.summary      = 'Helper for building foundation 3 grids more cleanly, in ruby'
   s.description  = 'Helper for building foundation 3 grids more cleanly, in ruby'

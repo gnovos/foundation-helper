@@ -4,8 +4,8 @@ module Foundation
 
   class Row
 
-    def initialize(max=12, &block)
-      @max, @content = max, []
+    def initialize(*args, &block)
+      @content, @classes, @max = [], args.select { |arg| !arg.is_a? Fixnum }, (args.find{ |arg| arg.is_a? Fixnum } || 12)
       if block
         content = instance_exec(self, &block)
         @content << content if content != self
@@ -29,7 +29,7 @@ module Foundation
       width = [(remaining / unsized), 1].max unless unsized.z0?
 
       out = "  " * depth
-      out += "<div class='row'>\n"
+      out += "<div class='#{[:row, *@classes].join(' ')}'>\n"
       @content.each do |content|
         if content.is_a? Foundation::Column
           out += content.render(depth + 1, width)
@@ -59,8 +59,8 @@ module Foundation
       end
     end
 
-    def row(max=12, &block)
-      @content << Row.new(max, &block)
+    def row(*args, &block)
+      @content << Row.new(*args, &block)
       self
     end
 
@@ -94,8 +94,8 @@ module Foundation
       instance_exec(&block) if block
     end
 
-    def row(max=12, &block)
-      @rows << Row.new(max, &block)
+    def row(*args, &block)
+      @rows << Row.new(*args, &block)
     end
 
     def to_s

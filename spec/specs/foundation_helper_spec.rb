@@ -17,7 +17,7 @@ describe Foundation do
         end
       end
 
-      row do
+      row(:foo, 2, :bar) do
         col(:centered) { "centercol" }
       end
 
@@ -51,8 +51,8 @@ describe Foundation do
     Inserted Column
   </div>
 </div>
-<div class='row'>
-  <div class='twelve columns centered'>
+<div class='row foo bar'>
+  <div class='two columns centered'>
     centercol
   </div>
 </div>
