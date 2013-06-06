@@ -36,15 +36,15 @@ describe Foundation do
     end.to_s.should == <<-HTML
 <div class='row'>
   <div>Inserted Row</div>
-  <div class='ten columns'>
+  <div class='small-10 large-10 columns'>
     <div class='row'>
-      <div class='one columns'>
+      <div class='small-1 large-1 columns'>
         foo
       </div>
-      <div class='two columns'>
+      <div class='small-2 large-2 columns'>
         bar
       </div>
-      <div class='three columns'>
+      <div class='small-3 large-3 columns'>
         baz
       </div>
     </div>
@@ -52,29 +52,29 @@ describe Foundation do
   </div>
 </div>
 <div class='row foo bar'>
-  <div class='two columns centered'>
+  <div class='small-2 large-2 columns centered'>
     centercol
   </div>
 </div>
 <div class='row'>
-  <div class='four columns'>
+  <div class='small-4 large-4 columns'>
     auto a
   </div>
-  <div class='four columns foo'>
+  <div class='small-4 large-4 columns foo'>
     auto b
   </div>
-  <div class='four columns'>
+  <div class='small-4 large-4 columns'>
     auto c
   </div>
 </div>
 <div class='row'>
-  <div class='two columns'>
+  <div class='small-2 large-2 columns'>
     auto a2
   </div>
-  <div class='two columns foo'>
+  <div class='small-2 large-2 columns foo'>
     auto b2
   </div>
-  <div class='two columns'>
+  <div class='small-2 large-2 columns'>
     auto c2
   </div>
 </div>

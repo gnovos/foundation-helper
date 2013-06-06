@@ -48,8 +48,6 @@ module Foundation
 
   class Column
 
-    WIDTHS = { 1 => 'one', 2 => 'two', 3 => 'three', 4 => 'four', 5 => 'five', 6 => 'six', 7 => 'seven', 8 => 'eight', 9 => 'nine', 10 => 'ten', 11 => 'eleven', 12 => 'twelve' }
-
     attr_reader :width
     def initialize(*args, &block)
       @content, @classes, @width = [], args.select { |arg| !arg.is_a? Fixnum }, args.find{ |arg| arg.is_a? Fixnum }
@@ -71,7 +69,8 @@ module Foundation
 
     def render(depth=0, w=nil)
       out = ("  " * depth)
-      out += "<div class='#{[WIDTHS[(width || w || 12).i!], 'columns', *@classes].join(' ')}'>\n"
+      wval = (width || w || 12).i!
+      out += "<div class='#{["small-#{wval} large-#{wval}", 'columns', *@classes].join(' ')}'>\n"
       @content.each do |content|
         if content.is_a?(Foundation::Row)
           out += content.render(depth + 1)
